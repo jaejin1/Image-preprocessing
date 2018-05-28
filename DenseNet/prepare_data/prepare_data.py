@@ -46,18 +46,28 @@ for fn in sorted(os.listdir('began_data')):
 
     print(data.shape)
 
-    if count == 110000:
+    if count == 109999:
         break
     else:
         count += 1
 
+with open('data.pkl', 'wb') as f:
+    pickle.dump(data, f)
+print('data.pkl save!')
+
 # label data
 
-label_real = np.array([1 for i in range(55000)])
-label_fake = np.array([0 for i in range(55000)])
+for i in range(110000):
+    if i == 0:
+        label_data = np.array([[1,0]])
+    elif i < 55000:
+        label_data = np.append(label_data, [[1, 0]], axis=0)
+    else:
+        label_data = np.append(label_data, [[0, 1]], axis=0)
 
-label_data = np.append(label_real,label_fake, axis=0)
-
+with open('label_data.pkl', 'wb') as f:
+    pickle.dump(label_data, f)
+print('label_data.pkl save!')
 
 # Shuffling data
 
@@ -74,3 +84,4 @@ with open('label_data.pkl', 'wb') as f:
 with open('data.pkl', 'wb') as f:
     pickle.dump(data, f)
 
+print('finish!!')
